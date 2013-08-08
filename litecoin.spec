@@ -1,11 +1,11 @@
 Summary:	Litecoin is a peer-to-peer currency
 Name:		litecoin
-Version:	0.6.9.2
-Release:	3
+Version:	0.8.3.7
+Release:	1
 License:	MIT/X11
 Group:		X11/Applications
 Source0:	https://github.com/litecoin-project/litecoin/archive/v%{version}.tar.gz
-# Source0-md5:	8d28e0d4bfd4bc88b8d1c56637ee93cf
+# Source0-md5:	26dd4961281979ce77ee47f6e796a49e
 URL:		http://www.litecoin.org
 BuildRequires:	QtCore-devel
 BuildRequires:	QtDBus-devel
@@ -49,11 +49,9 @@ qmake-qt4 \
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir}/%{name},%{_mandir}/man{1,5},%{_localedir},%{_desktopdir},%{_pixmapsdir},%{_datadir}/kde4/services}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man{1,5},%{_localedir},%{_desktopdir},%{_pixmapsdir},%{_datadir}/kde4/services}
 
-install src/litecoind $RPM_BUILD_ROOT%{_libdir}/%{name}/litecoind
-sed -e 's#/usr/lib/#%{_libdir}/#g' -e 's#bitcoin#litecoin#g' contrib/debian/bin/bitcoind > $RPM_BUILD_ROOT%{_bindir}/litecoind
-chmod 755 $RPM_BUILD_ROOT%{_bindir}/litecoind
+install -m755 src/litecoind $RPM_BUILD_ROOT%{_bindir}/litecoind
 
 install litecoin-qt $RPM_BUILD_ROOT%{_bindir}
 sed -e 's#bitcoin#litecoin#g' contrib/debian/bitcoin-qt.desktop > $RPM_BUILD_ROOT%{_desktopdir}/litecoin-qt.desktop
@@ -66,8 +64,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc doc/*.txt contrib/debian/examples/bitcoin.conf
 %attr(755,root,root) %{_bindir}/litecoind
-%dir %{_libdir}/%{name}
-%attr(755,root,root) %{_libdir}/%{name}/litecoind
 
 %files qt
 %defattr(644,root,root,755)
