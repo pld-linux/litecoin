@@ -41,7 +41,8 @@ qmake-qt4 \
 	USE_DBUS=1 \
 	USE_QRCODE=1
 
-%{__make}
+%{__make} \
+	CXX="%{__cxx}"
 
 %{__make} -C src -f makefile.unix \
 	CXX="%{__cxx}" \
