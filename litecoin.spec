@@ -1,7 +1,7 @@
 Summary:	Litecoin is a peer-to-peer currency
 Name:		litecoin
 Version:	0.8.6.1
-Release:	1
+Release:	2
 License:	MIT/X11
 Group:		X11/Applications
 Source0:	https://github.com/litecoin-project/litecoin/archive/v%{version}.tar.gz
@@ -54,8 +54,13 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man{1,5},%{_localedir},%{_deskt
 install -m755 src/litecoind $RPM_BUILD_ROOT%{_bindir}/litecoind
 
 install litecoin-qt $RPM_BUILD_ROOT%{_bindir}
-sed -e 's#bitcoin#litecoin#g' contrib/debian/bitcoin-qt.desktop > $RPM_BUILD_ROOT%{_desktopdir}/litecoin-qt.desktop
-sed -e 's#bitcoin#litecoin#g' contrib/debian/bitcoin-qt.protocol > $RPM_BUILD_ROOT%{_datadir}/kde4/services/litecoin-qt.protocol
+sed -e 's#bitcoin#litecoin#g' -e 's#Bitcoin#Litecoin#g' contrib/debian/bitcoin-qt.desktop > $RPM_BUILD_ROOT%{_desktopdir}/litecoin-qt.desktop
+sed -e 's#bitcoin#litecoin#g' -e 's#Bitcoin#Litecoin#g' contrib/debian/bitcoin-qt.protocol > $RPM_BUILD_ROOT%{_datadir}/kde4/services/litecoin-qt.protocol
+
+mv -f share/pixmaps/bitcoin32.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin32.png
+mv -f share/pixmaps/bitcoin64.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin64.png
+mv -f share/pixmaps/bitcoin128.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin128.png
+mv -f share/pixmaps/bitcoin256.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin256.png
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -70,3 +75,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/litecoin-qt
 %{_datadir}/kde4/services/litecoin-qt.protocol
 %{_desktopdir}/litecoin-qt.desktop
+%{_pixmapsdir}/litecoin*.png
