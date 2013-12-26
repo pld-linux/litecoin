@@ -6,7 +6,7 @@ License:	MIT/X11
 Group:		X11/Applications
 Source0:	https://github.com/litecoin-project/litecoin/archive/v%{version}.tar.gz
 # Source0-md5:	f818d06cad63cd5cf4ce7c2b8f04edef
-URL:		http://www.litecoin.org
+URL:		http://www.litecoin.org/
 BuildRequires:	QtCore-devel
 BuildRequires:	QtDBus-devel
 BuildRequires:	QtGui-devel
@@ -20,9 +20,9 @@ Requires:	perl-base
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Litecoin is a peer-to-peer currency. Peer-to-peer means that no central
-authority issues new money or tracks transactions. These tasks are
-managed collectively by the network.
+Litecoin is a peer-to-peer currency. Peer-to-peer means that no
+central authority issues new money or tracks transactions. These tasks
+are managed collectively by the network.
 
 %package qt
 Summary:	Qt-based Litecoin Wallet
@@ -48,19 +48,18 @@ qmake-qt4 \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man{1,5},%{_localedir},%{_desktopdir},%{_pixmapsdir},%{_datadir}/kde4/services}
 
-install -m755 src/litecoind $RPM_BUILD_ROOT%{_bindir}/litecoind
+install -p src/litecoind $RPM_BUILD_ROOT%{_bindir}/litecoind
+install -p litecoin-qt $RPM_BUILD_ROOT%{_bindir}
 
-install litecoin-qt $RPM_BUILD_ROOT%{_bindir}
 sed -e 's#bitcoin#litecoin#g' -e 's#Bitcoin#Litecoin#g' contrib/debian/bitcoin-qt.desktop > $RPM_BUILD_ROOT%{_desktopdir}/litecoin-qt.desktop
 sed -e 's#bitcoin#litecoin#g' -e 's#Bitcoin#Litecoin#g' contrib/debian/bitcoin-qt.protocol > $RPM_BUILD_ROOT%{_datadir}/kde4/services/litecoin-qt.protocol
 
-mv -f share/pixmaps/bitcoin32.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin32.png
-mv -f share/pixmaps/bitcoin64.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin64.png
-mv -f share/pixmaps/bitcoin128.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin128.png
-mv -f share/pixmaps/bitcoin256.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin256.png
+cp -p share/pixmaps/bitcoin32.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin32.png
+cp -p share/pixmaps/bitcoin64.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin64.png
+cp -p share/pixmaps/bitcoin128.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin128.png
+cp -p share/pixmaps/bitcoin256.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin256.png
 
 %clean
 rm -rf $RPM_BUILD_ROOT
