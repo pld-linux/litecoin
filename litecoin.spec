@@ -15,6 +15,7 @@ BuildRequires:	db-cxx-devel
 BuildRequires:	miniupnpc-devel >= 1.5
 BuildRequires:	openssl-devel
 BuildRequires:	qrencode-devel
+BuildRequires:	qt4-linguist
 BuildRequires:	qt4-qmake
 Requires:	perl-base
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
