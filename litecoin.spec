@@ -1,12 +1,15 @@
 Summary:	Litecoin is a peer-to-peer currency
 Name:		litecoin
-Version:	0.8.6.1
-Release:	5
+Version:	0.10.2.2
+Release:	1
 License:	MIT/X11
 Group:		X11/Applications
 Source0:	https://github.com/litecoin-project/litecoin/archive/v%{version}.tar.gz
-# Source0-md5:	f818d06cad63cd5cf4ce7c2b8f04edef
+# Source0-md5:	ef7e48192a96b00d28138bd3bfbda7a6
 URL:		http://www.litecoin.org/
+BuildRequires:	automake
+BuildRequires:	autoconf
+BuildRequires:	libtool
 BuildRequires:	QtCore-devel
 BuildRequires:	QtDBus-devel
 BuildRequires:	QtGui-devel
@@ -36,27 +39,28 @@ Qt-based Litecoin Wallet.
 %setup -q
 
 %build
-qmake-qt4 \
-	USE_UPNP=1 \
-	USE_DBUS=1 \
-	USE_QRCODE=1
-
-%{__make} \
-	CXX="%{__cxx}"
-
-%{__make} -C src -f makefile.unix \
-	CXX="%{__cxx}" \
-	CXXFLAGS="%{rpmcflags} %{rpmcxxflags} %{rpmcppflags}"
+./autogen.sh
+%configure \
+	--disable-shared \
+	--disable-silent-rules \
+	--with-miniupnpc \
+	--with-qrencode \
+	--with-incompatible-bdb \
+	--with-boost \
+	--with-gui=qt4 \
+	--with-qtdbus
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man{1,5},%{_localedir},%{_desktopdir},%{_pixmapsdir},%{_datadir}/kde4/services}
 
-install -p src/litecoind $RPM_BUILD_ROOT%{_bindir}/litecoind
-install -p litecoin-qt $RPM_BUILD_ROOT%{_bindir}
+install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir},%{_datadir}/kde4/services}
 
 sed -e 's#bitcoin#litecoin#g' -e 's#Bitcoin#Litecoin#g' contrib/debian/bitcoin-qt.desktop > $RPM_BUILD_ROOT%{_desktopdir}/litecoin-qt.desktop
 sed -e 's#bitcoin#litecoin#g' -e 's#Bitcoin#Litecoin#g' contrib/debian/bitcoin-qt.protocol > $RPM_BUILD_ROOT%{_datadir}/kde4/services/litecoin-qt.protocol
+
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 cp -p share/pixmaps/bitcoin32.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin32.png
 cp -p share/pixmaps/bitcoin64.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin64.png
@@ -70,6 +74,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc doc/*.txt contrib/debian/examples/bitcoin.conf
 %attr(755,root,root) %{_bindir}/litecoind
+%attr(755,root,root) %{_bindir}/litecoin-cli
+%attr(755,root,root) %{_bindir}/litecoin-tx
 
 %files qt
 %defattr(644,root,root,755)
