@@ -1,7 +1,7 @@
 Summary:	Litecoin is a peer-to-peer currency
 Name:		litecoin
 Version:	0.13.2
-Release:	2
+Release:	3
 License:	MIT/X11
 Group:		X11/Applications
 Source0:	https://github.com/litecoin-project/litecoin/archive/v%{version}//%{name}-%{version}.tar.gz
