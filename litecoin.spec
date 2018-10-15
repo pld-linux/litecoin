@@ -62,6 +62,13 @@ Portfel na litecoiny oparty na Qt.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
+cd src/secp256k1
+%{__libtoolize}
+%{__aclocal} -I build-aux/m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
+cd ../..
 %configure \
 	--disable-shared \
 	--disable-silent-rules \
