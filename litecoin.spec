@@ -1,12 +1,13 @@
 Summary:	Litecoin is a peer-to-peer currency
 Summary(pl.UTF-8):	Litecoin - waluta peer-to-peer
 Name:		litecoin
-Version:	0.13.2
-Release:	8
+Version:	0.16.3
+Release:	1
 License:	MIT
 Group:		X11/Applications
-Source0:	https://github.com/litecoin-project/litecoin/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	c0944edfe7ef8612556d3bbf543b6974
+#Sourrce0Download: https://github.com/litecoin-project/litecoin/releases
+Source0:	https://download.litecoin.org/litecoin-%{version}/src/%{name}-%{version}.tar.gz
+# Source0-md5:	071bf10b2077d56645cb549bc184e81d
 URL:		http://www.litecoin.org/
 BuildRequires:	QtCore-devel >= 4
 BuildRequires:	QtDBus-devel >= 4
@@ -23,6 +24,7 @@ BuildRequires:	libunivalue-devel
 BuildRequires:	miniupnpc-devel >= 1.5
 BuildRequires:	openssl-devel
 BuildRequires:	pkgconfig
+BuildRequires:	python3 >= 1:3.4
 BuildRequires:	protobuf-devel
 BuildRequires:	qrencode-devel
 BuildRequires:	qt4-linguist >= 4
@@ -85,33 +87,65 @@ cd ../..
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir},%{_datadir}/kde4/services}
 
-sed -e 's#bitcoin#litecoin#g' -e 's#Bitcoin#Litecoin#g' contrib/debian/bitcoin-qt.desktop > $RPM_BUILD_ROOT%{_desktopdir}/litecoin-qt.desktop
-sed -e 's#bitcoin#litecoin#g' -e 's#Bitcoin#Litecoin#g' contrib/debian/bitcoin-qt.protocol > $RPM_BUILD_ROOT%{_datadir}/kde4/services/litecoin-qt.protocol
-
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 # shared disabled, development packages present in bitcoin.spec and feathercoin.spec
 %{__rm} -r $RPM_BUILD_ROOT{%{_libdir}/libbitcoinconsensus.*,%{_includedir}/bitcoinconsensus.h,%{_pkgconfigdir}/libbitcoinconsensus.pc}
 
-cp -p share/pixmaps/bitcoin32.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin32.png
-cp -p share/pixmaps/bitcoin64.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin64.png
-cp -p share/pixmaps/bitcoin128.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin128.png
-cp -p share/pixmaps/bitcoin256.png $RPM_BUILD_ROOT%{_pixmapsdir}/litecoin256.png
+# see contrib/rpm/bitcoin.spec
+
+cat <<EOF >$RPM_BUILD_ROOT%{_desktopdir}/litecoin-qt.desktop
+[Desktop Entry]
+Encoding=UTF-8
+Name=Bitcoin
+Comment=Litecoin P2P Cryptocurrency
+Comment[fr]=Litecoin, monnaie virtuelle cryptographique pair à pair
+Comment[pl]=Litecoin - kryptowaluta P2P
+Comment[tr]=Litecoin, eşten eşe kriptografik sanal para birimi
+Exec=litecoin-qt %u
+Terminal=false
+Type=Application
+Icon=bitcoin128
+MimeType=x-scheme-handler/bitcoin;
+Categories=Office;Finance;
+EOF
+
+cat <<EOF >$RPM_BUILD_ROOT%{_datadir}/kde4/services/litecoin-qt.protocol
+[Protocol]
+exec=litecoin-qt '%u'
+protocol=litecoin
+input=none
+output=none
+helper=true
+listing=
+reading=false
+writing=false
+makedir=false
+deleting=false
+EOF
+
+cp -p share/pixmaps/bitcoin.ico $RPM_BUILD_ROOT%{_pixmapsdir}
+cp -p share/pixmaps/nsis-*.bmp $RPM_BUILD_ROOT%{_pixmapsdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc COPYING README.md doc/*.txt contrib/debian/examples/bitcoin.conf
+%doc COPYING doc/{README,REST-interface,assets-attribution,benchmarking,bips,dependencies,dnsseed-policy,reduce-traffic,release-notes*,shared-libraries,tor,zmq}.md doc/release-notes
 %attr(755,root,root) %{_bindir}/litecoind
 %attr(755,root,root) %{_bindir}/litecoin-cli
 %attr(755,root,root) %{_bindir}/litecoin-tx
+%{_mandir}/man1/litecoin-cli.1*
+%{_mandir}/man1/litecoin-tx.1*
+%{_mandir}/man1/litecoind.1*
 
 %files qt
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/litecoin-qt
 %{_datadir}/kde4/services/litecoin-qt.protocol
 %{_desktopdir}/litecoin-qt.desktop
-%{_pixmapsdir}/litecoin*.png
+%{_pixmapsdir}/bitcoin.ico
+%{_pixmapsdir}/nsis-*.bmp
+%{_mandir}/man1/litecoin-qt.1*
