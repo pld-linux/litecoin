@@ -98,7 +98,7 @@ install -d $RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir},%{_datadir}/kde4/servic
 cat <<EOF >$RPM_BUILD_ROOT%{_desktopdir}/litecoin-qt.desktop
 [Desktop Entry]
 Encoding=UTF-8
-Name=Bitcoin
+Name=Litecoin
 Comment=Litecoin P2P Cryptocurrency
 Comment[fr]=Litecoin, monnaie virtuelle cryptographique pair à pair
 Comment[pl]=Litecoin - kryptowaluta P2P
@@ -106,8 +106,8 @@ Comment[tr]=Litecoin, eşten eşe kriptografik sanal para birimi
 Exec=litecoin-qt %u
 Terminal=false
 Type=Application
-Icon=bitcoin128
-MimeType=x-scheme-handler/bitcoin;
+Icon=bitcoin
+MimeType=x-scheme-handler/litecoin;
 Categories=Office;Finance;
 EOF
 
