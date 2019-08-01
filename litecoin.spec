@@ -1,35 +1,38 @@
 Summary:	Litecoin is a peer-to-peer currency
 Summary(pl.UTF-8):	Litecoin - waluta peer-to-peer
 Name:		litecoin
-Version:	0.16.3
+Version:	0.17.1
 Release:	1
 License:	MIT
 Group:		X11/Applications
 #Sourrce0Download: https://github.com/litecoin-project/litecoin/releases
 Source0:	https://download.litecoin.org/litecoin-%{version}/src/%{name}-%{version}.tar.gz
-# Source0-md5:	071bf10b2077d56645cb549bc184e81d
+# Source0-md5:	7a486f0b5edcbbe3ea959ae8877e9672
 URL:		http://www.litecoin.org/
-BuildRequires:	QtCore-devel >= 4
-BuildRequires:	QtDBus-devel >= 4
-BuildRequires:	QtGui-devel >= 4
-BuildRequires:	automake >= 2.60
-BuildRequires:	autoconf
+BuildRequires:	Qt5Core-devel >= 5.4
+BuildRequires:	Qt5DBus-devel >= 4
+BuildRequires:	Qt5Gui-devel >= 4
+BuildRequires:	Qt5Network-devel >= 4
+BuildRequires:	Qt5Widgets-devel >= 4
+BuildRequires:	autoconf >= 2.60
+BuildRequires:	automake
 BuildRequires:	boost-devel >= 1.49
 BuildRequires:	db-cxx-devel >= 4.8
 BuildRequires:	gettext-tools
-BuildRequires:	libevent-devel
+BuildRequires:	libevent-devel >= 2
 BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	libtool >= 2:2
-BuildRequires:	libunivalue-devel
+BuildRequires:	libunivalue-devel >= 1.0.4
 BuildRequires:	miniupnpc-devel >= 1.5
 BuildRequires:	openssl-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python3 >= 1:3.4
 BuildRequires:	protobuf-devel
 BuildRequires:	qrencode-devel
-BuildRequires:	qt4-linguist >= 4
-BuildRequires:	qt4-qmake >= 4
+BuildRequires:	qt5-linguist >= 5.4
+BuildRequires:	qt5-qmake >= 5.4
 BuildRequires:	zeromq-devel >= 4
+Requires:	libunivalue >= 1.0.4
 Requires:	perl-base
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -75,7 +78,7 @@ cd ../..
 	--disable-shared \
 	--disable-silent-rules \
 	--with-boost \
-	--with-gui=qt4 \
+	--with-gui=qt5 \
 	--with-incompatible-bdb \
 	--with-miniupnpc \
 	--with-qrencode \
