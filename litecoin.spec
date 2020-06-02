@@ -2,12 +2,13 @@ Summary:	Litecoin is a peer-to-peer currency
 Summary(pl.UTF-8):	Litecoin - waluta peer-to-peer
 Name:		litecoin
 Version:	0.17.1
-Release:	4
+Release:	5
 License:	MIT
 Group:		X11/Applications
 #Sourrce0Download: https://github.com/litecoin-project/litecoin/releases
 Source0:	https://download.litecoin.org/litecoin-%{version}/src/%{name}-%{version}.tar.gz
 # Source0-md5:	7a486f0b5edcbbe3ea959ae8877e9672
+Patch0:		qt-5.15.patch
 URL:		http://www.litecoin.org/
 BuildRequires:	Qt5Core-devel >= 5.4
 BuildRequires:	Qt5DBus-devel >= 4
@@ -60,6 +61,7 @@ Portfel na litecoiny oparty na Qt.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__libtoolize}
