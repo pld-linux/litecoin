@@ -1,20 +1,20 @@
 Summary:	Litecoin is a peer-to-peer currency
 Summary(pl.UTF-8):	Litecoin - waluta peer-to-peer
 Name:		litecoin
-Version:	0.17.1
-Release:	5
+Version:	0.18.1
+Release:	1
 License:	MIT
 Group:		X11/Applications
 #Sourrce0Download: https://github.com/litecoin-project/litecoin/releases
 Source0:	https://download.litecoin.org/litecoin-%{version}/src/%{name}-%{version}.tar.gz
-# Source0-md5:	7a486f0b5edcbbe3ea959ae8877e9672
+# Source0-md5:	67af5786635639536e78993b1fc082d0
 Patch0:		qt-5.15.patch
 URL:		http://www.litecoin.org/
 BuildRequires:	Qt5Core-devel >= 5.4
-BuildRequires:	Qt5DBus-devel >= 4
-BuildRequires:	Qt5Gui-devel >= 4
-BuildRequires:	Qt5Network-devel >= 4
-BuildRequires:	Qt5Widgets-devel >= 4
+BuildRequires:	Qt5DBus-devel >= 5.4
+BuildRequires:	Qt5Gui-devel >= 5.4
+BuildRequires:	Qt5Network-devel >= 5.4
+BuildRequires:	Qt5Widgets-devel >= 5.4
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake
 BuildRequires:	boost-devel >= 1.49
@@ -80,7 +80,6 @@ cd ../..
 	--disable-shared \
 	--disable-silent-rules \
 	--with-boost \
-	--with-gui=qt5 \
 	--with-incompatible-bdb \
 	--with-miniupnpc \
 	--with-qrencode \
@@ -141,8 +140,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc COPYING doc/{README,REST-interface,assets-attribution,benchmarking,bips,dependencies,dnsseed-policy,reduce-traffic,release-notes*,shared-libraries,tor,zmq}.md doc/release-notes
 %attr(755,root,root) %{_bindir}/litecoind
 %attr(755,root,root) %{_bindir}/litecoin-cli
+%attr(755,root,root) %{_bindir}/litecoin-wallet
 %attr(755,root,root) %{_bindir}/litecoin-tx
 %{_mandir}/man1/litecoin-cli.1*
+%{_mandir}/man1/litecoin-wallet.1*
 %{_mandir}/man1/litecoin-tx.1*
 %{_mandir}/man1/litecoind.1*
 
