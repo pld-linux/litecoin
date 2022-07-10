@@ -1,16 +1,16 @@
+# TODO libmultiprocess
 Summary:	Litecoin is a peer-to-peer currency
 Summary(pl.UTF-8):	Litecoin - waluta peer-to-peer
 Name:		litecoin
-Version:	0.18.1
-Release:	7
+Version:	0.21.2.1
+Release:	1
 License:	MIT
 Group:		X11/Applications
 #Sourrce0Download: https://github.com/litecoin-project/litecoin/releases
 Source0:	https://download.litecoin.org/litecoin-%{version}/src/%{name}-%{version}.tar.gz
-# Source0-md5:	67af5786635639536e78993b1fc082d0
-Patch0:		qt-5.15.patch
+# Source0-md5:	062c4fdb4b73fb52bd1a3f3f5492b43a
 Patch1:		%{name}-univalue.patch
-URL:		http://www.litecoin.org/
+URL:		https://litecoin.org/
 BuildRequires:	Qt5Core-devel >= 5.4
 BuildRequires:	Qt5DBus-devel >= 5.4
 BuildRequires:	Qt5Gui-devel >= 5.4
@@ -21,8 +21,9 @@ BuildRequires:	automake
 BuildRequires:	boost-devel >= 1.49
 BuildRequires:	db-cxx-devel >= 4.8
 BuildRequires:	gettext-tools
-BuildRequires:	libevent-devel >= 2
-BuildRequires:	libstdc++-devel >= 6:4.7
+BuildRequires:	libevent-devel >= 2.0.21
+BuildRequires:	libfmt-devel
+BuildRequires:	libstdc++-devel >= 6:5
 BuildRequires:	libtool >= 2:2
 BuildRequires:	libunivalue-devel >= 1.0.4
 BuildRequires:	miniupnpc-devel >= 1.5
@@ -33,9 +34,12 @@ BuildRequires:	protobuf-devel
 BuildRequires:	qrencode-devel
 BuildRequires:	qt5-linguist >= 5.4
 BuildRequires:	qt5-qmake >= 5.4
+BuildRequires:	sqlite3-devel >= 3.7.17
 BuildRequires:	zeromq-devel >= 4
+Requires:	libevent >= 2.0.21
 Requires:	libunivalue >= 1.0.4
 Requires:	perl-base
+Requires:	sqlite3-libs >= 3.7.17
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -62,7 +66,6 @@ Portfel na litecoiny oparty na Qt.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch1 -p1
 
 %build
@@ -71,7 +74,7 @@ Portfel na litecoiny oparty na Qt.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-cd src/secp256k1
+cd src/secp256k1-zkp
 %{__libtoolize}
 %{__aclocal} -I build-aux/m4
 %{__autoconf}
