@@ -1,4 +1,4 @@
-# TODO libmultiprocess
+# TODO: --enable-multiprocess? (experimental as of 0.21, BR: libmultiprocess-devel)
 Summary:	Litecoin is a peer-to-peer currency
 Summary(pl.UTF-8):	Litecoin - waluta peer-to-peer
 Name:		litecoin
