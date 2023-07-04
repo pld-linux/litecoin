@@ -9,6 +9,7 @@ Group:		X11/Applications
 #Sourrce0Download: https://github.com/litecoin-project/litecoin/releases
 Source0:	https://download.litecoin.org/litecoin-%{version}/src/%{name}-%{version}.tar.gz
 # Source0-md5:	062c4fdb4b73fb52bd1a3f3f5492b43a
+Patch0:		includes.patch
 Patch1:		%{name}-univalue.patch
 URL:		https://litecoin.org/
 BuildRequires:	Qt5Core-devel >= 5.4
@@ -66,6 +67,7 @@ Portfel na litecoiny oparty na Qt.
 
 %prep
 %setup -q
+%patch0 -p1
 %patch1 -p1
 
 %build
